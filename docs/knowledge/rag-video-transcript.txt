@@ -1,0 +1,141 @@
+Chapter 1: What Gemini Embeddings 2 Can Do
+0:00Google just dropped Gemini embedding 2,
+0:011 secondwhich is their very first natively multimodal embedding model, and it is already blowing my mind. This means that you can have completely multimodal databases with text, images, videos,
+0:1111 secondsaudio, and documents. And it can actually understand the nuanced relationships between these different types of media so that you can have actual realworld answers back. And
+0:2020 secondshere's a quick look at some of the benchmarks, which I always think are important to look at, but I think it's always worth taking it with a grain of salt. And that's why in today's video,
+0:2626 secondsI'm going to show you a few examples that I already built out that are super practical. And then I'm going to show you exactly how you can set this up for yourself. And trust me, it is so much
+0:3434 secondseasier than you probably think. So, let me show you some examples and then I'll teach you how to do this yourself. So,
+Chapter 2: Instruction Manual Demo
+0:3838 secondsright here, you can see that I've got a project called manual, which basically stands for like instruction manual. So,
+0:4242 secondswhat I did is I dropped in this PDF right here, which is a 68page PDF about how to use this vacuum cleaner. You can see that it's pretty complex. It's got
+0:5050 secondstons of different text. It's got tons of diagrams. It's got images. And if you wanted to be able to chat with it, it would be pretty complicated to build this ingestion pipeline if you use
+0:5858 secondssomething like Naden because you'd have to figure out exactly how you want to chunk it and how to capture the images and how to store those and how to pull them back. But I kid you not, I dropped in the PDF right here and I said, "Hey,
+1:091 minute, 9 secondsCloud Code, there's the PDF. I want to be able to chat with this using Google's new embeddings model. Just go build it for me." And not only did it build it for me, but it built this app where I
+1:171 minute, 17 secondscan actually talk to it. So let's say I ask, you know, how do I clean the filter? It's searching right now our Pine Cone database. And in the database,
+1:241 minute, 24 secondswe're storing both text and images. So here you can see it says to clean the filter, follow these steps. Number one,
+1:291 minute, 29 secondsnumber two, blah blah blah. And then down here, we have actual images. So if I click on this one, we can see the actual diagram that it pulled from because sometimes when you're trying to
+1:371 minute, 37 secondstroubleshoot things, especially if it's physical, an image is way more valuable text. And what you can see here is that it also returned the same diagram in different languages, but you could turn
+1:451 minute, 45 secondsthat off if you didn't want to. And what's super cool is at the end I can actually expand the sources and it shows me the different pages that it looked at and the confidence score or the percent
+1:541 minute, 54 secondsmatch that it had for that page. Let's go ahead and try one more for this demo which is just a very broad what are the parts and I'm assuming there's lots of different pages that it might need to
+2:022 minutes, 2 secondsfigure out what the parts are. So what we got here are we have the main components from page six. We have what's included on page seven and then we have available accessories. So that's super
+2:112 minutes, 11 secondsgood. And it looks like we got three different images. So we have what's in the box. We have the actual getting to know your Hoover Impulse cordless
+2:182 minutes, 18 secondsvacuum. So all the other different kind of components here. And then the final image is how to order extra accessories.
+Chapter 3: Roofing Company Demo
+2:242 minutes, 24 secondsSo that's just super cool. Okay, so that was our instruction manual example. I dropped in one PDF and it basically was able to turn that into text and images
+2:332 minutes, 33 secondsin our database and pull everything back accurately. So then let's scale it up a little bit. I am doing a roofing example. So in this one I gave it 13
+2:402 minutes, 40 secondsimages and all these images are different roofs that might have some sort of issue. So, let's say you're a roofing company and you help fix roofs.
+2:462 minutes, 46 secondsWhat might be helpful is if you had an app where you internally or a client could upload a picture of their roof and you could get like a quote or an internal brief about any past work that
+2:552 minutes, 55 secondsyou've done on a roof that looks like that. So, if I drag in a picture right here, it shoots it off and says, "Find similar past projects for this roof."
+3:023 minutes, 2 secondsIt's searching the database. It's looking through all of our different past projects. And all of those images have metadata like how much this costed us or, you know, how long it took, how
+3:103 minutes, 10 secondsmany team members. So here are the five similar projects. We get a percent match for each of them as you can see. And then we get a description like quote range and averages, team size, trend,
+3:193 minutes, 19 secondsroof types, breakdown. And so obviously I'm not a roofing expert. If you had some subject matter expertise about roofs that you could add into here, this would obviously be better and you would
+3:283 minutes, 28 secondshave your own data. But it's just really cool that you can get a quick search across potentially hundreds and hundreds of projects to do this. And I could ask a follow-up. So let's say I said, "Okay,
+3:383 minutes, 38 secondsawesome. Can you tell me about the one that we did in Richmond, Virginia? It looks pretty similar. And at this point,
+3:423 minutes, 42 secondsit could pull the metadata from this image and it could go grab other pictures from that file if we had them.
+3:473 minutes, 47 secondsBut anyways, we get the basic info, the scope, what stands out, pricing, context. Super super awesome. But yeah,
+3:533 minutes, 53 secondsclearly this needs some subject matter expertise. It obviously made up all this data because I feel like this roof would have costed more to fix than this roof.
+Chapter 4: Why This Is a Big Deal
+4:014 minutes, 1 secondSo, so if you've never built a pipeline like this before, then it might not seem super impressive because that type of functionality is pretty standard on a
+4:084 minutes, 8 secondslot of chatbot based features. But the fact that I built both of those demos in less than 30 minutes is what truly blows my mind because that would have taken me
+4:174 minutes, 17 secondsseveral hours if not several days to build out an NAN. And that's why I had to show you guys this stuff. All right,
+Chapter 5: How RAG & Embeddings Work
+4:224 minutes, 22 secondsso we're going to hop into the live build. But real quick, in case you haven't really heard of like Rag or why this multimodal stuff is awesome, let me explain it real quick. So rag stands for
+4:314 minutes, 31 secondsretrieval augmented generation and it basically is just the concept of your AI agent only knows so much in its training data. So if you ask it a question and it
+4:394 minutes, 39 secondsdoesn't have that information, it has to go grab it in order to generate a better answer. So it basically retrieves information, it augments its answer
+4:464 minutes, 46 secondsbecause it has more data and then it generates an answer or generates a response to you. Now typically when we think of rag and we think of a vector database type of rag, we have to look at
+4:554 minutes, 55 secondsit like this. We have some sort of data source, right? whether that's document or video or an image. And what happens is we have to turn this document into
+5:035 minutes, 3 secondsvector points or little chunks. So for example, if this was a document about our company, then maybe we'd split it up into three chunks. Those chunks would
+5:115 minutes, 11 secondsrun through an embeddings model, which is, you know, Google's new embeddings model 2 that we're talking about today.
+5:155 minutes, 15 secondsAnd then it would spit out these vector points, which would basically just be a numerical representation of what the data means. So this chunk might be placed over here because it's company
+5:235 minutes, 23 secondsoverview information. This chunk might be placed over here with financial information. And this chunk might be placed over here with marketing information. And just to help you guys
+5:315 minutes, 31 secondscontextualize that, when I was first testing this out, I did a demo where I dropped in an Adam Sandler and me picture that was Nano Banana. Um, a
+5:395 minutes, 39 secondsrandom picture of me, a video of me using Claude Code, a video of a dog playing guitar, a video of me speaking,
+5:455 minutes, 45 secondsum, a couple text files, and a couple more images that were just literally so random. I put a picture of smiley face potato fries in here. And what happened after it embedded all of those is it
+5:535 minutes, 53 secondsgave me this report which is basically the multimodal embeddings but this is a 2D view rather than a 3D view. But you can see that it's placing things where
+6:016 minutes, 1 secondit deems appropriate. So up here we have you know first agentic workflow which is in the category tech and it is a text file. We've got over here a dog playing
+6:096 minutes, 9 secondsguitar which is in the category entertainment and the modality is video.
+6:126 minutes, 12 secondsWe've got the smiley face for eyes which is category food. The modality is image.
+6:166 minutes, 16 secondsSo I think you guys understand the point. we have a source of truth that gets embedded and then it gets placed somewhere in a multi-dimensional space based on the actual meaning or you know value of what that source of truth is.
+6:276 minutes, 27 secondsAnd so that's why it's so cool that we can have a space where we have images,
+6:316 minutes, 31 secondsvideos, audio, text, documents all in the exact same space and the AI is intelligent enough to query through it to find what it needs in the right
+6:386 minutes, 38 secondscontext and when. And this is obviously a bizarre example because smiley face fries and a dog playing guitar and a video of me talking have nothing to do with each other. But if all of these
+6:466 minutes, 46 secondswere pictures of roofs for example, then they would be very split up based on like is this water damage or is this just like old age or you know other
+Chapter 6: Setting Up Claude Code
+6:546 minutes, 54 secondsthings about roofs. So if you've never used cloud code before or you want to follow along with this video exactly, I use it in Visual Studio Code which is free to download. And when you download
+7:027 minutes, 2 secondsthat, it'll look like this. All you have to do is open it up, go over here to the extensions, type in Cloud Code, install this, and then sign in with your account
+7:097 minutes, 9 secondsin order to get connected. You do have to be on a paid account. You cannot use free Cloud Code. And then what you're going to do is click on this in the top left to open up a new folder, which is
+7:177 minutes, 17 secondsbasically just the project that we're going to work in. And I'm going to open up a brand new one. So my screen will look exactly like your guys' screen and you can just follow what I do. Okay. So
+7:247 minutes, 24 secondsI just opened up a folder called embedding demo. I have this stuff over here. I'm going to exit out of. I'm going to click on this orange button,
+Chapter 7: Planning the Build
+7:317 minutes, 31 secondswhich opens up cloud code. And now your screen should look like this. So I'm going to show you exactly how I got everything set up. I went ahead and I switched to plan mode. I went over to
+7:407 minutes, 40 secondsthis documentation from Google and I went to the actual like API embeddings information. I copied this URL, pasted
+7:467 minutes, 46 secondsit in and said, "Hey, Cloud Code, I want to use Gemini's new embeddings 2 model
+7:537 minutes, 53 secondsin order to have a Pine Cone vector database filled with videos and images and text. Can you please build me a plan
+8:028 minutes, 2 secondsto set all of this up? create me av file with the placeholders and I will drop in my Pine Cone API key, my Gemini API key,
+8:098 minutes, 9 secondsand my open router API key. So, the Pine Cone API key is so we can set up the database. That's actually going to look like this. Just go to pine cone.io. And
+8:178 minutes, 17 secondsyou can see in here we've got our different databases for our manual multimodal for our roofing projects. And then this was just a random one. And the cool thing is all you have to do is give
+8:268 minutes, 26 secondsCloud Code your API key. It will build the database and it will throw everything in there. You don't have to do anything. So on Pine Cone, you can go ahead and use the starter plan, which is free. And this will be more than enough to just get started to see how it works.
+8:368 minutes, 36 secondsAnd then you're going to go over to Google AI Studio. You're going to come over here to get API key and then create a new API key right here. And that's
+8:438 minutes, 43 secondsgoing to be for accessing Gemini's new embeddings model. And then you're going to go to Open Router.AI. If you wanted to, you could use an OpenAI key or
+8:518 minutes, 51 secondsanthropic key. But Open Router basically just lets you have all of these models in one, which is why I like to use it. So once you get an account in here,
+8:568 minutes, 56 secondsyou'll basically just go to your account. you will come to your API keys,
+9:009 minutescreate a new one, and then give that to Cloud Code. So, those are the three things we need. So, what it does now is it spits out this plan. So, we can basically read what Cloud Code is planning on doing. Here's the context.
+9:109 minutes, 10 secondsHere's the proposed project structure that it's going to create. Here are the dependencies. And here is the basically step-by-step plan. Now, if you wanted to change anything, you could highlight it,
+9:189 minutes, 18 secondsyou could add a comment, and you could make suggestions. For the sake of the demo, I'm just going to go ahead and auto accept what Claude is thinking to do. And hopefully, it gets everything
+9:259 minutes, 25 secondsbuilt out for us. And then all we have to do is give it the documents that we want to embed. So here's the to-do list.
+Chapter 8: Creating the Vector Database
+9:309 minutes, 30 secondsI'm just going to check in with you guys once this has finished up. Okay, so you can see it built all those files. And now in ourv it gave us these placeholders. So this is where you would
+9:389 minutes, 38 secondsgo grab Gemini, paste it here. Go grab Pine Cone, paste it here. And then after you paste all three, just make sure you save this file before you exit out of
+9:469 minutes, 46 secondsit. All right, so I added those keys and now I said, where should I add my images, videos, and text? And it wants me to put them into the data folder. So,
+9:539 minutes, 53 secondsI could open this up and make subfolders for image, videos, and documents. But what I'm going to do is I'm just going to drop everything in there, and I'm not going to tell it which is which.
+10:0010 minutesObviously, it will be able to figure it out. So, I'm sorry for being boring, but I am going to use the same nine files that I used for for the earlier demo just because it's a good mix of, like I
+10:0810 minutes, 8 secondssaid, images, videos, text, and we're going to shoot this off now. All right.
+Chapter 9: Building the Chat App
+10:1310 minutes, 13 secondsSo, normally I would say this in plan mode, but I'm just going to keep sending it. Right now, I said media has been dropped in, as you can see over here.
+10:1910 minutes, 19 secondsGet that into Pine Cone. then build me a simple chat web app on a local host so I can test that everything works well. I want you to use sonnet for the chat
+10:2710 minutes, 27 secondsmodel. So these are the three pine cone indexes that we currently have and like I said it's going to go ahead and build us a new one because it has our API key now. Okay, so right now it just created
+10:3510 minutes, 35 secondsthat pine cone index and now it's doing the ingesting which like I said this is my favorite part because cloud code is so so powerful at being able to do this
+10:4310 minutes, 43 secondsand then the new model the new embeddings model is also so powerful. So combining them together makes this so seamless where you can build a database with natural language because like I
+10:5110 minutes, 51 secondssaid, I've built multimodal vector store agents before in nodn, but it's so complicated. They're super fragile and there's a lot of hoops that you have to
+10:5910 minutes, 59 secondsjump through in order to just store these different buckets and have all these descriptions of the images. This is so much better. And there's one thing I noticed is that it says to build the
+11:0711 minutes, 7 secondschat web app with sonnet. So once it's done ingesting, I'm going to stop it and correct it. So if you ever notice that it's doing something wrong, there's nothing wrong with stopping it and
+11:1511 minutes, 15 secondssending a new message because it still understands the context. So now I'm going to go ahead and stop this. I'm going to say, "Hey, so I don't want you to build the chat web app with Sonnet. I
+11:2411 minutes, 24 secondswant you to still use Opus. I just meant on the web app when we're actually talking with the AI, I want that AI model to be Sonnet." So make sure you
+11:3211 minutes, 32 secondsuse the front-end design skill to build this chat web app. Just keep it super simple. Okay, now I'll check in with you guys when we have our PC. Okay, so it
+11:3911 minutes, 39 secondslooks like our chat app is ready. I'm going to click on this logo host and we have multimodal rag chat. So now I can ask a question. Okay, so I'm just shooting this off to see what happens. I
+Chapter 10: Testing & Improving Results
+11:4811 minutes, 48 secondssaid, how should I be looking to get workflow clients and do you have any interesting pictures of people meeting each other potentially warm connections?
+11:5411 minutes, 54 secondsSo I wanted to see if it can pull the workflow clients text, which it probably will, but I wanted to see what it did here with the picture of me and AI Adam
+12:0112 minutes, 1 secondSandler. Okay, so it came back and has some some methods which came straight from my text document. But it says that it doesn't have any pictures of this
+12:0912 minutes, 9 secondsexact thing. So what I'm going to do is I'm just going to copy this actual string and I'm going to go back into cloud code and say awesome, it's
+12:1712 minutes, 17 secondsworking. Here is a conversation I just had with it. And then I'm going to paste in that conversation I just had. I want to understand the way that it thinks
+12:2412 minutes, 24 secondsabout the images or videos in the database so that I could ask a question that would get it to invoke and send me the image or video. And this is really
+12:3212 minutes, 32 secondsthe mindset shift when I work with Claude Code. It's just about being genuinely curious. If you don't understand something, just ask. So here it says, "Right now, the system can't
+12:4012 minutes, 40 secondsactually show you images or videos. It only stores a text description alongside each embedding. Here's how it works.
+12:4512 minutes, 45 secondsImages just the description I wrote during ingestion. Videos, same thing.
+12:4812 minutes, 48 secondsIt's just the description. So what you can do from here is you can have better descriptions to go along with all your pictures and videos which you kind of saw earlier in the demo where all of
+12:5712 minutes, 57 secondsthem had some metadata. And then what we can do is actually serve the media so we can update the chat app to display images and videos inline when they come back so that you're not just getting a file name. Thanks for explaining that.
+13:0613 minutes, 6 secondsI'm just doing a quick demo right now for YouTube. So what I want you to do is just add some metadata about the dog playing guitar video. Just saying that
+13:1513 minutes, 15 secondsit is a cartoon golden retriever I think playing the guitar in front of a fireplace. and update the actual app so that it can serve us that media. And I
+13:2313 minutes, 23 secondsjust want to validate that this works and it's able to search through different types of media. So, as you can see now, what it's going to do is it has to reingest the video for better
+13:3113 minutes, 31 secondsdescription and update the app. And I don't think by default it's going to do this, which is why I would say to use plan mode, but in this case, you might have two duplicate videos in the
+Chapter 11: Searching Videos with RAG
+13:4013 minutes, 40 secondsdatabase, and you would want to make sure that it's deleting the old ones or it's basically just upserting this new one. So now if I say, "Show me the golden retriever playing guitar." It can
+13:4813 minutes, 48 secondsactually pull that back and right here in our app,
+13:5513 minutes, 55 secondswe can watch the video. So this is just so so cool. You can have a database of tons of different videos and you could be able to actually search through them with rag. Now the one limitation of that
+Chapter 12: Current Limitations
+14:0414 minutes, 4 secondsright now is that the videos are up to 120 seconds and only MP4 orov. The images are capable of processing up to
+14:1114 minutes, 11 secondssix per request supporting PNG and JPEG formats. And I imagine that this stuff is going to get a lot better. You can even see that it was able to get over this limitation because the document that I gave it was like 68 pages long.
+14:2214 minutes, 22 secondsIt just had to figure out how it could break that up, chunk it up, and still maintain context. And I didn't try with audio yet, but that would be very similar to the way you do your videos
+14:2914 minutes, 29 secondsand images. The key thing about the audio is being able to give it good descriptions so that the AI understands what's actually in that audio file. So that's where the subject matter
+14:3814 minutes, 38 secondsexpertise of the systems that you're building really, really does matter. The importance and value is way more shifting towards being able to communicate clearly, having
+14:4614 minutes, 46 secondsunderstanding of processes, deep understanding of processes and where holes might be and where you need to be very explicit rather than just knowing
+Chapter 13: Final Thoughts
+14:5314 minutes, 53 secondstechnically how to configure different nodes and how to formulate a JSON body for an HTTP request. But anyways, that is going to do it for today. So, if you
+15:0115 minutes, 1 secondguys enjoyed the video or you learned something new, please give a like. It helps me out a ton. And as always, I appreciate you guys making it to the end of the video. I'll see you on the next one. Thanks everyone.
+
+Sync to video time
+
+All
+
+From Nate Herk | AI Automation
