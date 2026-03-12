@@ -86,6 +86,8 @@ The report is a single scrolling page with these sections:
 
 ## Getting Started
 
+See **[GETTING-STARTED.md](./GETTING-STARTED.md)** for the complete step-by-step setup guide, including where to get each API key and how to build the RAG knowledge base.
+
 ### Prerequisites
 
 - Node.js 18+
