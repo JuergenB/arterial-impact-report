@@ -87,6 +87,7 @@ Behind the report is a **RAG (Retrieval-Augmented Generation) knowledge base** â
 | Deployment | [Vercel](https://vercel.com) |
 | Vector database | [Pinecone](https://pinecone.io) (RAG vector store, free tier) |
 | Embeddings & retrieval | [Gemini](https://ai.google.dev) File Search (managed RAG) + Gemini Embedding 2 |
+| Project data & config | [Airtable](https://airtable.com) (crawl targets, section config, content source management, verification queue) |
 | Content scraping | [FireCrawl](https://firecrawl.dev) |
 | File sharing & assets | [Dropbox](https://dropbox.com) (shared asset storage between Scott and dev) |
 | Auto-ingest pipeline | Dropbox folder watch â†’ auto-scrape and index into RAG (planned) |
