@@ -6,15 +6,27 @@ A web-based annual impact report for [Arterial.org](https://arterial.org), a 501
 
 This project generates a visually rich, scroll-driven impact report — similar to what organizations like Art21 produce as annual PDFs — but as a fast, interactive, mobile-friendly website. It covers Arterial's full ecosystem:
 
-- **NOT REAL ART** — Podcast network, grant program, school, exhibitions, artist database
-- **The Underbelly Project** — Documentary grant and film completion
-- **Artbound / PBS** — Emmy Award-winning series partnership
-- **Classic Black** — Classical music program with Ric'key Pageot
-- **Arthouse** — Unscripted TV series in development
-- **The Good Art** — Lowbrow art movement documentary
-- **Artsville USA** — Digital platform for American contemporary arts & crafts
-- **Arterial Radio** — Internet-based arts talk radio
-- **Crewest Studio** — Partner creative space
+**Flagship initiatives (this year's top priorities):**
+- **NOT REAL ART** — 200-episode podcast network (4.9★), $12K/yr grant program (co-founded with Channing Dungey, 36 recipients), NRA School, 30+ First Friday online exhibitions, 175+ Q+ART artist profiles, Remote video series, AI-powered artwork submission pipeline
+- **Arthouse** — Unscripted TV series ("House Hunters for art"), showrunner Stacy Schneider (300+ HGTV episodes), Chicago pilot filmed, $150K Indiegogo campaign, Fractured Atlas partnership, targeting Netflix/Hulu/Apple TV
+
+**Major active programs:**
+- **First Friday & Artwork Archive** — Monthly curated online exhibitions (30+ since 2023), powered by AI submission pipeline (n8n + Airtable + GPT-4o/Perplexity), open calls via ArtCall.org
+- **Artsville USA** — Asheville/WNC arts platform (Arterial subsidiary). "Tale of Two Cities" exhibition at NOAFA with 40+ artists, hurricane recovery narrative. Louise Glickman Grant & Residency ($10K, launching 2026)
+- **Classic Black** — Classical music program with Steinway Artist Ric'key Pageot (Madonna's touring pianist, youngest Cirque du Soleil music director). Sold-out concerts, documentary in development
+
+**Distribution & partnerships:**
+- **Artbound / PBS** — Multi-Emmy Award-winning PBS SoCal series (7 Emmys 2024–2025, Season 15). Arterial is financial sponsor
+- **The Underbelly Project** — Documentary about secret 2009–2010 subway art installation (100+ street artists). $12K Arterial grant, premiered Miami Art Week Dec 2024
+- **Random Media** — LA-based indie distributor, Arterial's path to streaming platforms
+
+**In development:**
+- **The Good Art** — Lowbrow/Pop Surrealism art movement documentary
+- **Arterial Radio** — Internet-based arts talk radio channel
+- **Ready To Roll** — Documentary about concert roadies (Crewest Studio)
+
+**Infrastructure:**
+- **Crewest Studio** — Co-founded by Scott Power and Man One (Alex Poli). Production company; predecessor Crewest Gallery (2002–2012) was the first LA gallery to legitimize graffiti as contemporary art (100+ exhibitions, 2,000+ artists, 20+ countries)
 
 ## How It Works
 
@@ -58,14 +70,39 @@ Behind the report is a **RAG (Retrieval-Augmented Generation) knowledge base** �
 
 | Component | Technology |
 |-----------|-----------|
+| Code editor | [Cursor](https://cursor.com) (VS Code fork with AI integration) |
+| Live preview | Go Live extension (hot-reload in Cursor) |
 | Framework | [Astro](https://astro.build) 5.x |
 | Styling | [Tailwind CSS](https://tailwindcss.com) 4.x |
 | Animation | [GSAP](https://gsap.com) + ScrollTrigger + [Lenis](https://lenis.darkroom.engineering/) |
 | Images | Astro `<Image>` (build-time optimization) + Sharp |
+| Image generation | [Replicate](https://replicate.com) (Flux, SDXL, Ideogram, and more) |
 | Deployment | [Vercel](https://vercel.com) |
 | Knowledge base | Gemini File Search (managed RAG) + Gemini Embedding 2 |
 | Content scraping | [FireCrawl](https://firecrawl.dev) |
 | Build tool | [Claude Code](https://claude.ai/claude-code) |
+
+### Image Generation Models (via Replicate)
+
+Replicate provides access to multiple image generation models, each with different strengths. Use this table to choose the right model for the task:
+
+| Model | Best For | Text Rendering | Characters | Backgrounds | Conceptual | Speed |
+|-------|----------|:-:|:-:|:-:|:-:|-------|
+| **Flux Schnell** (`black-forest-labs/flux-schnell`) | Fast iteration, drafts | Fair | Good | Good | Good | ~3s |
+| **Flux Dev** (`black-forest-labs/flux-dev`) | High-quality hero images | Fair | Very Good | Very Good | Very Good | ~15s |
+| **Flux Pro** (`black-forest-labs/flux-1.1-pro`) | Production-quality output | Good | Excellent | Excellent | Excellent | ~20s |
+| **Ideogram v2** (`ideogram-ai/ideogram-v2`) | Text-heavy graphics, logos | Excellent | Good | Good | Good | ~15s |
+| **SDXL** (`stability-ai/sdxl`) | Stylized art, illustrations | Poor | Good | Excellent | Good | ~10s |
+| **Recraft v3** (`recraft-ai/recraft-v3`) | Design assets, icons, text | Excellent | Fair | Good | Fair | ~10s |
+| **Google Imagen 3** (when available) | Photorealism, text in scenes | Very Good | Excellent | Very Good | Very Good | ~12s |
+
+**Quick guide by task:**
+- **Section hero backgrounds** → Flux Dev or Flux Pro (photorealistic, high-res)
+- **Text overlays / typographic graphics** → Ideogram v2 or Recraft v3 (reliable text rendering)
+- **Artist portraits / character illustrations** → Flux Pro or Google Imagen 3
+- **Abstract / artistic backgrounds** → SDXL or Flux Dev (style control)
+- **Conceptual illustrations** (e.g., "creativity connecting communities") → Flux Pro or Flux Dev
+- **Quick placeholders during development** → Flux Schnell (fastest)
 
 ## Report Sections
 
@@ -74,15 +111,19 @@ The report is a single scrolling page with these sections:
 0. **Cover** — Full-screen hero with Arterial branding
 1. **Mission & Tenets** — Access, Underrepresentation, Media exposure grows the art economy
 2. **Founder's Letter** — Scott Power's year-in-review narrative
-3. **Year at a Glance** — Animated key metrics (2,000+ artists, 6 podcasts, 300+ hours, etc.)
-4. **Programs & Projects** — Card grid of all Arterial initiatives
-5. **NOT REAL ART** — Deep dive into the NRA ecosystem
-6. **Artist Community** — Featured artists, First Fridays, open calls
-7. **Distribution & Partnerships** — Random Media, PBS, streaming plans
-8. **Leadership** — Scott Power, Joshua Wattles, advisory
-9. **Financial Summary** — 80/20 program-to-admin allocation, revenue/expense charts
-10. **Supporters & Donors** — Tiered recognition
-11. **Looking Ahead** — Next FY goals and calls to action
+3. **Year at a Glance** — Animated key metrics (200 podcast episodes, 36 grant recipients, 30+ exhibitions, 7 Emmys, etc.)
+4. **Programs & Projects** — Card grid (priority order: NRA, Arthouse, Artsville USA, Classic Black, Artbound/PBS, Underbelly, Good Art, Arterial Radio)
+5. **NOT REAL ART In Depth** — Podcast network, grant program, NRA School, Q+ART, Remote series, artist database
+6. **First Friday & Artwork Archive** — 30+ curated online exhibitions, AI-powered submission pipeline, open calls
+7. **Arthouse In Depth** — TV series, production team, Chicago pilot, partnerships, distribution strategy
+8. **Artsville USA In Depth** — "Tale of Two Cities" at NOAFA, Virtual Gallery, podcast, Louise Glickman Grant & Residency
+9. **Classic Black** — Ric'key Pageot, concerts, documentary, Black excellence in classical music
+10. **Artist Community** — Featured artists, open calls, testimonials, 2019 Creators Conference
+11. **Distribution & Partnerships** — Random Media, PBS SoCal, Austin PBS, Fractured Atlas, Art Share LA, streaming plans
+12. **Leadership** — Scott Power, Channing Dungey Power, Joshua Wattles, Man One / Crewest Studio
+13. **Financial Summary** — 80/20 allocation, revenue/expense charts, grant and campaign totals
+14. **Supporters & Donors** — Tiered recognition
+15. **Looking Ahead** — Artwork-archive exports, Artsville PAVE, Arterial Radio, Arthouse network deals
 
 ## Getting Started
 
@@ -90,16 +131,25 @@ See **[GETTING-STARTED.md](./GETTING-STARTED.md)** for the complete step-by-step
 
 ### Prerequisites
 
-- Node.js 18+
-- A Google AI API key (for Gemini File Search / RAG)
-- An Unsplash API key (for placeholder images)
-- A FireCrawl API key (for web scraping, optional if content is already crawled)
+**Accounts needed** (see [GETTING-STARTED.md](./GETTING-STARTED.md) for step-by-step signup instructions):
+
+- [Anthropic Claude](https://claude.ai) — Max subscription ($100/mo) for Claude Code
+- [GitHub](https://github.com) — Free account for code and issue tracking
+- [Replicate](https://replicate.com) — AI image generation (prepaid credits, ~$20 to start)
+- [Pinecone](https://pinecone.io) — Vector database for RAG knowledge base (free tier)
+- [Google AI Studio](https://aistudio.google.com) — Gemini API for embeddings (free tier)
+- [Unsplash](https://unsplash.com/developers) — Stock placeholder images (free tier)
+- [FireCrawl](https://firecrawl.dev) — Web scraping (free tier, 500 pages)
+- [Vercel](https://vercel.com) — Website hosting and auto-deploy (free tier)
+- [Cursor](https://cursor.com) — Code editor with Go Live extension (free)
+
+**Developer tools:** Node.js 18+, Git
 
 ### Setup
 
 ```bash
 # Clone the repo
-git clone https://github.com/[org]/arterial-impact-report.git
+git clone https://github.com/JuergenB/arterial-impact-report.git
 cd arterial-impact-report
 
 # Install dependencies
@@ -116,6 +166,7 @@ npm run dev
 ### Environment Variables
 
 ```
+REPLICATE_API_TOKEN=        # Replicate for AI image generation
 UNSPLASH_ACCESS_KEY=        # Unsplash API for placeholder images
 GOOGLE_AI_API_KEY=          # Gemini API for RAG / File Search
 FIRECRAWL_API_KEY=          # FireCrawl for web scraping (optional)

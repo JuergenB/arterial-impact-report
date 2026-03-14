@@ -9,12 +9,14 @@ The project is designed to be **vibe-coded**: built and edited entirely through 
 ## Tech Stack
 
 ```
+Code editor:        Cursor (VS Code fork) + Go Live extension for hot-reload preview
 Framework:          Astro 5.x (static site, scroll-driven single page)
 Styling:            Tailwind CSS 4.x
 Animation:          GSAP + ScrollTrigger (scroll-triggered reveals, counters, parallax)
                     + Lenis (smooth scroll library, pairs with GSAP)
 Image optimization: Astro's built-in <Image> component (build-time optimization)
                     + Sharp (for compressing oversized uploads via script)
+Image generation:   Replicate API (Flux, SDXL, Ideogram, Recraft, etc.)
 Stock images:       Unsplash API (for placeholders when custom assets are unavailable)
 Deployment:         Vercel
 Build tool:         Claude Code
@@ -89,6 +91,7 @@ Knowledge base:     RAG system (see Knowledge Base section below)
     │       ├── FounderLetterSection.astro
     │       ├── MetricsSection.astro
     │       ├── ProgramsSection.astro
+    │       ├── ArthouseSection.astro
     │       ├── NotRealArtSection.astro
     │       ├── ArtistCommunitySection.astro
     │       ├── DistributionSection.astro
@@ -110,6 +113,7 @@ Knowledge base:     RAG system (see Knowledge Base section below)
     │       ├── founders-letter.ts
     │       ├── metrics.ts
     │       ├── programs.ts
+    │       ├── arthouse.ts
     │       ├── not-real-art.ts
     │       ├── artist-community.ts
     │       ├── distribution.ts
@@ -126,22 +130,26 @@ Knowledge base:     RAG system (see Knowledge Base section below)
 
 ## Report Sections
 
-The report is a single-page scrolling site with 12 sections rendered in order:
+The report is a single-page scrolling site with sections rendered in order. Section ordering reflects Scott's priorities — NOT REAL ART and Arthouse are this year's top two initiatives:
 
 | # | Section | Key Content |
 |---|---------|-------------|
 | 00 | Cover / Hero | Full-screen hero, Arterial logo, report title, fiscal year |
 | 01 | Mission & Tenets | Three tenets (Access, Underrepresentation, Media exposure), vision, five key insights |
 | 02 | Founder's Letter | Scott Power's year-in-review narrative |
-| 03 | Year at a Glance | Key metrics as large animated counters (2,000+ artists, 6 podcasts, etc.) |
-| 04 | Programs & Projects | Card grid: NRA, Underbelly, Artbound/PBS, Classic Black, Arthouse, The Good Art, Artsville USA, Arterial Radio |
-| 05 | NOT REAL ART In Depth | Podcast network, grant program, school, exhibitions, artist database, Q+ART, Remote series |
-| 06 | Artist Community | Featured artists, First Fridays, open calls, testimonials |
-| 07 | Distribution & Partnerships | Random Media, PBS SoCal, Austin PBS, streaming plans |
-| 08 | Leadership & Governance | Scott Power, Joshua Wattles bios, Crewest Studio |
-| 09 | Financial Summary | 80/20 allocation visualization, revenue/expense charts |
-| 10 | Supporters & Donors | Tiered donor recognition |
-| 11 | Looking Ahead | Next FY goals, CTAs (donate, submit art, listen, watch, follow) |
+| 03 | Year at a Glance | Key metrics: 200 podcast episodes, 36 grant recipients, 30+ exhibitions, 7 Emmy Awards, 100+ Underbelly artists, $12K annual grants |
+| 04 | Programs & Projects | Card grid (priority order): NOT REAL ART, Arthouse, Artsville USA, Classic Black, Artbound/PBS, Underbelly, The Good Art, Arterial Radio |
+| 05 | NOT REAL ART In Depth | Podcast network (200 eps, 4.9★), grant program (co-founded with Channing Dungey, 36 recipients), NRA School, Q+ART (175+ profiles), Remote video series (Badir McCleary), artist database |
+| 06 | First Friday & Artwork Archive | 30+ curated online exhibitions since 2023 (Morgan Laurens), AI-powered submission pipeline (artwork-archive repo), Artwork Archive platform integration, open calls |
+| 07 | Arthouse In Depth | Unscripted TV series ("House Hunters for art"), showrunner Stacy Schneider (300+ HGTV eps), host Carmen Acosta, Chicago pilot, Indiegogo campaign, Fractured Atlas partnership, Netflix/Hulu/Apple TV targets |
+| 08 | Artsville USA In Depth | "Tale of Two Cities" at NOAFA (40+ artists, hurricane recovery), Virtual Gallery, podcast (30+ eps), Louise Glickman Grant & Residency ($10K), RADA and Blue Ridge Heritage partnerships |
+| 09 | Classic Black | Steinway Artist Ric'key Pageot (Madonna, Cirque du Soleil), sold-out concerts (Place des Arts Montreal), 8+ Black composers featured, documentary in development |
+| 10 | Artist Community | Featured artists, open calls, testimonials, 1,200+ grant applicants in 2024, 2019 Creators Conference (Juxtapoz, Hollywood Reporter coverage) |
+| 11 | Distribution & Partnerships | Random Media, PBS SoCal (Artbound, 7 Emmys), Austin PBS, streaming plans, Fractured Atlas, Art Share LA, NOAFA |
+| 12 | Leadership & Governance | Scott Power, Channing Dungey Power (WB Television Chairman), Joshua Wattles (former Paramount GC, DeviantArt $36M acquisition), Man One / Crewest Studio |
+| 13 | Financial Summary | 80/20 allocation visualization, revenue/expense charts, $12K/yr NRA grants, $12K Underbelly grant, $150K Arthouse Indiegogo |
+| 14 | Supporters & Donors | Tiered donor recognition |
+| 15 | Looking Ahead | artwork-archive Phase C (online exhibitions), Artsville PAVE program, Arterial Radio launch, Arthouse network deals, next grant cycle |
 
 ## Architecture: Two Concerns
 
@@ -301,11 +309,66 @@ Each crawl target includes a `reportSections` field mapping crawled pages to rep
 
 ## GitHub Workflow
 
-- Use GitHub Issues to decompose work: one issue per report section
-- Each issue lists its content sources, component path, data file, and acceptance criteria
+### Issue Naming Convention
+
+All issues use a `[CODE]` prefix that maps to an epic:
+
+| Code | Epic | Phase |
+|------|------|-------|
+| `DOC` | Documentation & Architecture | 0 |
+| `DX` | Developer Experience | 1 |
+| `IMG` | Image Generation | 1 |
+| `RAG` | Knowledge Base | 2 |
+| `RPT` | Report Sections | 3 |
+| `DSN` | Design System | 3–4 |
+| `DPL` | Deployment | 1–4 |
+| `ONB` | Scott Onboarding | 4 |
+
+**Title formats:**
+- Epic tracking issue: `[CODE] Epic: Name`
+- Sub-issues: `[CODE] Verb + description`
+- Report sections: `[RPT-##] Verb + description` (## = section number, e.g., `[RPT-05]`)
+
+**Labels:** Each issue gets an `epic:CODE` label and a `phase:N` label. Use `needs-scott` for issues blocked on Scott's input.
+
+### Workflow Rules
+
 - Claude Code works on one issue at a time to keep context focused
 - Commit messages reference issues: `feat: add Programs section (closes #7)`
 - PR-based workflow if Scott is also vibe-coding (prevents conflicts)
+- **Before starting code on any issue:** verify README.md and CLAUDE.md are current for that feature area
+- **After completing any structural change:** re-read README.md and update it
+
+### Project Phases
+
+| Phase | Name | Focus |
+|-------|------|-------|
+| 0 | Documentation & Architecture | Docs, conventions, design decisions (CURRENT) |
+| 1 | Dev Environment & Scaffolding | Astro setup, tooling, Vercel |
+| 2 | Knowledge Base (RAG) | Content ingestion, vector store, retrieval |
+| 3 | Report MVP | All 13 sections with real content |
+| 4 | Design Polish & Onboarding | Brand polish, Scott learns to edit |
+
+### Account Ownership
+
+Scott owns all service accounts (Anthropic, Replicate, Pinecone, etc.). Juergen receives API keys via shared Dropbox. See GETTING-STARTED.md for the full signup checklist.
+
+## Scope Guard (for Scott's sessions)
+
+**IMPORTANT:** This repo is the Arterial RAG knowledge base and impact report. It is NOT a general-purpose project folder.
+
+If the user asks to build something unrelated to the impact report or RAG system (e.g., "build me a web page about the Underbelly Project," "create a landing page for Classic Black," "make a marketing site for NRA"), do the following:
+
+1. **Acknowledge** what they want to build
+2. **Explain** that it belongs in a separate project with its own repo, environment, and deployment
+3. **Offer to help** set up the new project:
+   - Create a new GitHub repo: `gh repo create arterial/[project-name] --public`
+   - Initialize an Astro project: `npm create astro@latest`
+   - Copy API keys from `.env.local` to the new project
+   - Connect to Vercel for deployment
+4. **Note** that the new project can still query the Arterial RAG knowledge base for content — the knowledge base is shared infrastructure, but the website code lives in its own repo
+
+Do NOT create unrelated web pages, landing pages, or applications in this repository.
 
 ## Important Notes
 
@@ -313,3 +376,4 @@ Each crawl target includes a `reportSections` field mapping crawled pages to rep
 - All factual claims about Arterial must be sourced from the knowledge base, not hallucinated.
 - The report is designed to be produced annually. Content changes each FY; structure remains stable.
 - The RAG knowledge base is a long-term asset — it will power chatbots and other tools beyond this report.
+- This repo will eventually be renamed to reflect its broader scope (RAG system + future tools, not just the impact report). See GitHub issue #18.
