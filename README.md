@@ -1,10 +1,14 @@
-# Arterial Impact Report
+# Arterial Impact Report & RAG Knowledge Base
 
-A web-based annual impact report for [Arterial.org](https://arterial.org), a 501(c)(3) non-profit media organization dedicated to human creativity.
+This project has two goals:
 
-## What This Is
+1. **Arterial Impact Report** — The first and most important deliverable. A visually rich, scroll-driven annual impact report for [Arterial.org](https://arterial.org), a 501(c)(3) non-profit media organization dedicated to human creativity. Similar to what organizations like Art21 produce as annual PDFs, but as a fast, interactive, mobile-friendly website.
 
-This project generates a visually rich, scroll-driven impact report — similar to what organizations like Art21 produce as annual PDFs — but as a fast, interactive, mobile-friendly website. It covers Arterial's full ecosystem:
+2. **Arterial RAG Environment** — A persistent, AI-queryable knowledge base covering Arterial's entire business. This is the long-term asset: it powers the impact report today and will serve future annual reports, chatbots, content generation, and any tool that needs grounded knowledge about Arterial and its ecosystem.
+
+## What It Covers
+
+The report and knowledge base span Arterial's full ecosystem:
 
 **Flagship initiatives (this year's top priorities):**
 - **Arthouse** — Unscripted TV series ("House Hunters for art"), showrunner Stacy Schneider (300+ HGTV episodes), Chicago pilot filmed, $150K Indiegogo campaign, Fractured Atlas partnership, targeting Netflix/Hulu/Apple TV
