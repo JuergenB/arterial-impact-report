@@ -92,6 +92,8 @@ Behind the report is a **RAG (Retrieval-Augmented Generation) knowledge base** â
 | Content scraping | [FireCrawl](https://firecrawl.dev) |
 | CRM | [ActiveCampaign](https://activecampaign.com) (artist communications) |
 | Submission forms | [Paperform](https://paperform.co) (exhibition open calls) |
+| File sharing & assets | [Dropbox](https://dropbox.com) (shared asset storage between Scott and dev) |
+| Auto-ingest pipeline | Dropbox folder watch â†’ auto-scrape and index into RAG (planned) |
 
 ### Image Generation Models (via Replicate)
 
