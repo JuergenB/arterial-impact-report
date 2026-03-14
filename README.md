@@ -1,12 +1,12 @@
-# Arterial Impact Report & RAG Knowledge Base
+# Arterial Impact Report / Arterial Knowledge Base
 
 This project has two goals:
 
 1. **Arterial Impact Report** — The first and most important deliverable. A visually rich, scroll-driven annual impact report for [Arterial.org](https://arterial.org), a 501(c)(3) non-profit media organization dedicated to human creativity. Similar to what organizations like Art21 produce as annual PDFs, but as a fast, interactive, mobile-friendly website.
 
-2. **Arterial RAG Environment** — A persistent, AI-queryable knowledge base covering Arterial's entire business. This is the long-term asset: a RAG system that can be used to instantiate different projects — the impact report is the first, but future annual reports, chatbots, content generation tools, and other deliverables will draw from the same knowledge base.
+2. **Arterial Knowledge Base (RAG)** — A persistent, AI-queryable knowledge base covering Arterial's entire business. "RAG" stands for *Retrieval-Augmented Generation* — a technique where AI doesn't rely on its own memory alone but retrieves real facts from a curated library of your documents, websites, and data before generating any answer. Think of it as giving AI a research assistant that reads everything Arterial has ever published, so every answer is grounded in real information rather than guesswork. This knowledge base can be used to instantiate different projects — the impact report is the first, but future annual reports, chatbots, content generation tools, and other deliverables will draw from the same knowledge base.
 
-> **Note:** These two concerns may eventually be split into separate repositories — the RAG system as shared infrastructure and the impact report as one of its consumers. For now they live together as a single proposal.
+> **Note:** These two concerns may eventually be split into separate repositories — the knowledge base as shared infrastructure and the impact report as one of its consumers. For now they live together as a single proposal.
 
 ## What It Covers
 
