@@ -4,7 +4,9 @@ This project has two goals:
 
 1. **Arterial Impact Report** — The first and most important deliverable. A visually rich, scroll-driven annual impact report for [Arterial.org](https://arterial.org), a 501(c)(3) non-profit media organization dedicated to human creativity. Similar to what organizations like Art21 produce as annual PDFs, but as a fast, interactive, mobile-friendly website.
 
-2. **Arterial RAG Environment** — A persistent, AI-queryable knowledge base covering Arterial's entire business. This is the long-term asset: it powers the impact report today and will serve future annual reports, chatbots, content generation, and any tool that needs grounded knowledge about Arterial and its ecosystem.
+2. **Arterial RAG Environment** — A persistent, AI-queryable knowledge base covering Arterial's entire business. This is the long-term asset: a RAG system that can be used to instantiate different projects — the impact report is the first, but future annual reports, chatbots, content generation tools, and other deliverables will draw from the same knowledge base.
+
+> **Note:** These two concerns may eventually be split into separate repositories — the RAG system as shared infrastructure and the impact report as one of its consumers. For now they live together as a single proposal.
 
 ## What It Covers
 
