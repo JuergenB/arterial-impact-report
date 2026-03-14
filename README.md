@@ -76,6 +76,7 @@ Behind the report is a **RAG (Retrieval-Augmented Generation) knowledge base** â
 
 | Component | Technology |
 |-----------|-----------|
+| Build tool | [Claude Code](https://claude.ai/claude-code) |
 | Code editor | [Cursor](https://cursor.com) (VS Code fork with AI integration) |
 | Live preview | Go Live extension (hot-reload in Cursor) |
 | Framework | [Astro](https://astro.build) 5.x |
@@ -84,9 +85,13 @@ Behind the report is a **RAG (Retrieval-Augmented Generation) knowledge base** â
 | Images | Astro `<Image>` (build-time optimization) + Sharp |
 | Image generation | [Replicate](https://replicate.com) (Flux, SDXL, Ideogram, and more) |
 | Deployment | [Vercel](https://vercel.com) |
-| Knowledge base | Gemini File Search (managed RAG) + Gemini Embedding 2 |
+| Vector database | [Pinecone](https://pinecone.io) (RAG vector store, free tier) |
+| Embeddings & retrieval | [Gemini](https://ai.google.dev) File Search (managed RAG) + Gemini Embedding 2 |
+| Operational database | [Airtable](https://airtable.com) (artwork submissions, artist records, campaigns) |
+| Workflow automation | [n8n](https://n8n.io) Cloud (AI enrichment pipelines, intake workflows) |
 | Content scraping | [FireCrawl](https://firecrawl.dev) |
-| Build tool | [Claude Code](https://claude.ai/claude-code) |
+| CRM | [ActiveCampaign](https://activecampaign.com) (artist communications) |
+| Submission forms | [Paperform](https://paperform.co) (exhibition open calls) |
 
 ### Image Generation Models (via Replicate)
 
