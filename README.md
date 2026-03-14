@@ -7,8 +7,8 @@ A web-based annual impact report for [Arterial.org](https://arterial.org), a 501
 This project generates a visually rich, scroll-driven impact report — similar to what organizations like Art21 produce as annual PDFs — but as a fast, interactive, mobile-friendly website. It covers Arterial's full ecosystem:
 
 **Flagship initiatives (this year's top priorities):**
-- **NOT REAL ART** — 200-episode podcast network (4.9★), $12K/yr grant program (co-founded with Channing Dungey, 36 recipients), NRA School, 30+ First Friday online exhibitions, 175+ Q+ART artist profiles, Remote video series, AI-powered artwork submission pipeline
 - **Arthouse** — Unscripted TV series ("House Hunters for art"), showrunner Stacy Schneider (300+ HGTV episodes), Chicago pilot filmed, $150K Indiegogo campaign, Fractured Atlas partnership, targeting Netflix/Hulu/Apple TV
+- **NOT REAL ART** — 200-episode podcast network (4.9★), $12K/yr grant program (co-founded with Channing Dungey, 36 recipients), NRA School, 30+ First Friday online exhibitions, 175+ Q+ART artist profiles, Remote video series, AI-powered artwork submission pipeline
 
 **Major active programs:**
 - **First Friday & Artwork Archive** — Monthly curated online exhibitions (30+ since 2023), powered by AI submission pipeline (n8n + Airtable + GPT-4o/Perplexity), open calls via ArtCall.org
