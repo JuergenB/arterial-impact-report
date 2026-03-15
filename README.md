@@ -1,12 +1,43 @@
-# Arterial Impact Report / Arterial Knowledge Base
+# Arterial — Documentation, Knowledge Base & Impact Report
 
-This project has two goals:
+This is the **planning and documentation hub** for a three-part initiative to build a knowledge-powered platform for [Arterial.org](https://arterial.org), a 501(c)(3) non-profit media organization dedicated to human creativity.
 
-1. **Arterial Impact Report** — The first and most important deliverable. A visually rich, scroll-driven annual impact report for [Arterial.org](https://arterial.org), a 501(c)(3) non-profit media organization dedicated to human creativity. Similar to what organizations like Art21 produce as annual PDFs, but as a fast, interactive, mobile-friendly website.
+## The Three Repositories
 
-2. **Arterial Knowledge Base (RAG)** — A persistent, AI-queryable knowledge base covering Arterial's entire business. "RAG" stands for *Retrieval-Augmented Generation* — a technique where AI doesn't rely on its own memory alone but retrieves real facts from a curated library of your documents, websites, and data before generating any answer. Think of it as giving AI a research assistant that reads everything Arterial has ever published, so every answer is grounded in real information rather than guesswork. This knowledge base can be used to instantiate different projects — the impact report is the first, but future annual reports, chatbots, content generation tools, and other deliverables will draw from the same knowledge base.
+### 1. `arterial-impact-report` (this repo) — Documentation & Research
 
-> **Note:** These two concerns may eventually be split into separate repositories — the knowledge base as shared infrastructure and the impact report as one of its consumers. For now they live together as a single proposal.
+The central planning repo. Contains research documents, design decisions, ecosystem analysis, and project context that inform the other two repositories. No application code lives here — this is where we figure out *what* to build and *why*.
+
+### 2. `arterial-rag-app` — Knowledge Base Application
+
+A Next.js 16+ web app (shadcn/ui components) where Scott and his team manage Arterial's knowledge base. "RAG" stands for *Retrieval-Augmented Generation* — a technique where AI doesn't rely on its own memory alone but retrieves real facts from a curated library of your documents, websites, and data before generating any answer. Think of it as giving AI a research assistant that reads everything Arterial has ever published, so every answer is grounded in real information rather than guesswork.
+
+**Key features:**
+- **Login and user management** — secure access for the Arterial team
+- **Drag-and-drop document upload** — drop PDFs, pitch decks, reports, images directly into the knowledge base
+- **Classification interface** — tag and categorize each document with the right metadata (critical for accurate retrieval from Pinecone)
+- **Audio widget** — Scott can verbally describe what he's adding, and the system transcribes and attaches his context as metadata
+- **URL manager** — add web pages with detailed descriptions of what they contain, so the scraper knows what to index and retrieval is more accurate
+- **Comments and notes** — annotate any resource with additional context
+- **Dropbox integration** — watch a shared folder and auto-ingest new files
+
+The quality of descriptions and metadata attached to each document is what makes or breaks RAG retrieval — this app is purpose-built to make that process easy and thorough.
+
+### 3. `arterial-impact-report-app` — Impact Report Website
+
+The first and most important deliverable from the knowledge base. A visually rich, scroll-driven annual impact report — similar to what organizations like Art21 produce as annual PDFs, but as a fast, interactive, mobile-friendly website.
+
+This also serves as a **template** for future Arterial presentation sites — any time Scott needs a polished website to showcase information to potential investors, partners, or stakeholders, a new instance can be spun up from this template and populated from the same knowledge base.
+
+Built with Astro 5.x, Tailwind CSS, GSAP scroll animations, and deployed on Vercel.
+
+### Visibility
+
+| Repository | Visibility | Why |
+|-----------|-----------|-----|
+| `arterial-impact-report` | **Public** | Documentation, research, and project planning — nothing sensitive |
+| `arterial-rag-app` | **Private** | Application code, API integrations, user auth |
+| `arterial-impact-report-app` | **Private** | Report site code, content data, deployment config |
 
 ## What It Covers
 
