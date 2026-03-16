@@ -1,32 +1,70 @@
 # Getting Started
 
-Step-by-step setup guide for the Arterial Impact Report project.
+Step-by-step setup guide for the Arterial project ecosystem.
 
 This guide covers two audiences:
-- **Scott (founder):** Sign up for services, provide API keys, and eventually use Cursor to edit the report
-- **Juergen (developer):** Set up the full development environment and build the project
+- **Scott (founder):** Understand what services are needed and how you'll interact with the system
+- **Juergen (developer):** Set up the full development environment across all three repositories
+
+---
+
+## Open Decisions (Not Yet Finalized)
+
+The following infrastructure and business decisions are still under discussion:
+
+### Account Ownership & Licensing Model
+
+| Option | How It Works | Pros | Cons |
+|--------|-------------|------|------|
+| **Scott owns everything** | Scott signs up for all services, owns billing, shares API keys with dev | Full ownership and portability | Scott manages 10+ accounts and API keys |
+| **Polymash licenses to Scott** | Polymash (Juergen) owns and manages all infrastructure; Scott pays a monthly fee with zero signups | Zero admin burden for Scott | Dependency on Polymash; less portability |
+| **Hybrid** | Scott owns identity accounts (GitHub, Vercel); Polymash manages AI/API infrastructure with dedicated Arterial keys and usage monitoring | Balance of ownership and convenience | More complex billing |
+
+**To decide:**
+- Does Scott want to own accounts or rent infrastructure?
+- If Polymash licenses, what's the monthly fee structure?
+- How are AI API costs (which vary with usage) passed through — flat fee, usage-based, or capped?
+
+### Pricing
+
+| Item | Notes |
+|------|-------|
+| Development cost | TBD — scope depends on RAG app complexity and report design |
+| Ongoing hosting/infrastructure | ~$100–150/mo for AI APIs + hosting (varies with usage) |
+| AI API usage monitoring | Need dedicated API keys per project to track and charge back usage |
+| Maintenance & updates | Annual report refresh, knowledge base updates, bug fixes |
+
+### Dedicated API Keys for Arterial
+
+If Polymash manages infrastructure, each AI service needs a **dedicated API key for Arterial** (separate from Polymash's own keys) to enable usage monitoring and chargeback:
+
+- Anthropic API (Claude models for automations and agents — separate from Claude Code subscription)
+- OpenAI API (GPT-4o, GPT-4.1 for classification, scoring, and automation tasks)
+- Google AI / Gemini API (embeddings, retrieval)
+- Replicate (image generation)
+- Pinecone (vector database)
+- FireCrawl (web scraping)
+
+> **Important distinction:** Claude Code (the $100/mo subscription) covers interactive development sessions. But AI models used in **automations, LLM agents, and background pipelines** (e.g., n8n workflows, batch processing, the RAG app's classification features) require separate **Anthropic API** and/or **OpenAI API** keys with their own billing. These are not covered by the Claude Code subscription.
 
 ---
 
 ## Overview: What You Need
 
-| # | Service | What It Does | Cost | Who Signs Up |
-|---|---------|-------------|------|-------------|
-| 1 | **Anthropic (Claude)** | The AI that builds and edits the site | $100/mo | Scott |
-| 2 | **GitHub** | Stores the code, tracks tasks | Free | Scott |
-| 3 | **Replicate** | Generates images using AI models | ~$0.003–$0.05/image | Scott |
-| 4 | **Pinecone** | Stores the knowledge base (searchable AI memory) | Free | Scott |
-| 5 | **Google AI Studio** | Powers AI embeddings and search | Free | Scott |
-| 6 | **Unsplash** | Stock photos for placeholders | Free | Scott |
-| 7 | **FireCrawl** | Scrapes website content for the knowledge base | Free (500 pages) | Scott |
-| 8 | **Vercel** | Hosts and deploys the website | Free | Scott |
-| 9 | **Cursor** | Code editor with AI features (Scott's future use) | Free | Scott (Phase 4) |
-
-**Monthly cost: ~$100–120/mo.** The main expense is the Claude Max subscription ($100/mo). Everything else is free or pay-per-use. Replicate costs ~$20/mo during active image generation.
-
-### Account Ownership
-
-**Scott owns all accounts.** These are Arterial's accounts — Scott signs up, owns the billing relationships, and shares API keys with Juergen for development. This is the most scalable approach: if Scott later uses these services for other projects or works with other developers, the accounts are already in his name.
+| # | Service | What It Does | Cost | Decision |
+|---|---------|-------------|------|----------|
+| 1 | **Claude Code** | AI that builds and edits the project interactively | $100/mo subscription | Developer tool (Juergen) |
+| 2 | **Anthropic API** | Claude models in automations, agents, pipelines | Pay-per-use (~$5–25/mo) | Dedicated Arterial key needed |
+| 3 | **OpenAI API** | GPT-4o/4.1 for classification, scoring, automation | Pay-per-use (~$5–25/mo) | Dedicated Arterial key needed |
+| 4 | **GitHub** | Stores the code, tracks tasks | Free | Scott needs account |
+| 5 | **Replicate** | Generates images using AI models | ~$0.003–$0.05/image | Ownership TBD |
+| 6 | **Pinecone** | Stores the knowledge base (vector database) | Free tier | Ownership TBD |
+| 7 | **Google AI Studio** | Powers AI embeddings and search | Free tier | Ownership TBD |
+| 8 | **Airtable** | Project config, crawl targets, content management | Free / Team plan (Scott has) | Scott's existing account |
+| 9 | **Unsplash** | Stock photos for placeholders | Free | Ownership TBD |
+| 10 | **FireCrawl** | Scrapes website content for the knowledge base | Free (500 pages) | Ownership TBD |
+| 11 | **Vercel** | Hosts and deploys websites | Free | Ownership TBD |
+| 12 | **Cursor** | Code editor with AI features (Scott's future use) | Free | Scott (Phase 4) |
 
 ---
 
@@ -47,16 +85,33 @@ Dropbox/Arterial Impact Report/
 Create a file like `API Keys/api-keys.txt` with this template:
 
 ```
-Arterial Impact Report — API Keys
+Arterial Project — API Keys
 ==================================
 KEEP THIS FILE PRIVATE. Do not email or share outside Dropbox.
 
+# AI Models (for automations — separate from Claude Code subscription)
 ANTHROPIC_API_KEY=          (from console.anthropic.com)
-REPLICATE_API_TOKEN=        (from replicate.com/account/api-tokens)
-PINECONE_API_KEY=           (from app.pinecone.io)
+OPENAI_API_KEY=             (from platform.openai.com)
 GOOGLE_AI_API_KEY=          (from aistudio.google.com)
-UNSPLASH_ACCESS_KEY=        (from unsplash.com/developers)
+
+# Image Generation
+REPLICATE_API_TOKEN=        (from replicate.com/account/api-tokens)
+
+# Knowledge Base
+PINECONE_API_KEY=           (from app.pinecone.io)
+
+# Project Data
+AIRTABLE_PERSONAL_ACCESS_TOKEN=  (from airtable.com/create/tokens)
+AIRTABLE_BASE_ID=                (from Airtable API docs, starts with "app")
+
+# Web Scraping
 FIRECRAWL_API_KEY=          (from firecrawl.dev)
+
+# Workflow Automation
+N8N_API_KEY=                (from n8n cloud settings)
+
+# Stock Images
+UNSPLASH_ACCESS_KEY=        (from unsplash.com/developers)
 ```
 
 **Alternative:** If both Scott and Juergen use 1Password or Bitwarden, create a shared vault called "Arterial Dev."
@@ -104,7 +159,34 @@ FIRECRAWL_API_KEY=          (from firecrawl.dev)
 
 ---
 
-### 2. GitHub — Code repository and task tracking
+### 2. OpenAI — AI models for automations and pipelines
+
+**What it does:** GPT-4o and GPT-4.1 models are used in automated workflows — classifying artwork images, scoring content quality, generating structured data, and other tasks that run in the background without human interaction. These are separate from Claude Code (which is interactive).
+
+**Cost:** Pay-per-use. Budget **$5–25/month** depending on automation volume. Set a monthly spending cap.
+
+**Step-by-step:**
+
+1. Go to [platform.openai.com](https://platform.openai.com)
+2. Click **Sign Up** (email or Google account)
+3. Verify your email
+4. Go to **Settings** → **Billing** → **Add payment method**
+5. Add **$25 in prepaid credits** to start
+6. Set a **monthly spending limit of $25** under **Settings** → **Limits**
+7. Go to **API Keys** (left sidebar) or [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+8. Click **Create new secret key**
+9. Name it `arterial`
+10. **Copy the key immediately** — you will never see it again
+11. Paste it into your shared API keys file as `OPENAI_API_KEY=sk-...`
+
+**Gotchas:**
+- OpenAI API is completely separate from a ChatGPT subscription — you need API credits even if you pay for ChatGPT Plus
+- The key is shown only ONCE when created
+- Prepaid credits expire after 12 months if unused
+
+---
+
+### 3. GitHub — Code repository and task tracking
 
 **What it does:** GitHub stores the project's code and tracks all tasks (issues). Think of it as the project's filing cabinet and to-do list combined.
 
@@ -124,7 +206,7 @@ FIRECRAWL_API_KEY=          (from firecrawl.dev)
 
 ---
 
-### 3. Replicate — AI image generation
+### 4. Replicate — AI image generation
 
 **What it does:** Replicate lets the AI generate images for the report — hero backgrounds, artistic illustrations, placeholder graphics — using models like Flux, SDXL, and Ideogram. Each model has different strengths (see the model comparison table in README.md).
 
@@ -160,7 +242,7 @@ FIRECRAWL_API_KEY=          (from firecrawl.dev)
 
 ---
 
-### 4. Pinecone — Knowledge base (vector database)
+### 5. Pinecone — Knowledge base (vector database)
 
 **What it does:** Pinecone stores the project's "AI memory" — all the information about Arterial's programs, history, and ecosystem. When the AI needs to write accurate content about Arterial, it searches Pinecone to find the real facts instead of making things up.
 
@@ -192,7 +274,7 @@ FIRECRAWL_API_KEY=          (from firecrawl.dev)
 
 ---
 
-### 5. Google AI Studio — Gemini API for embeddings and search
+### 6. Google AI Studio — Gemini API for embeddings and search
 
 **What it does:** Google's Gemini API creates the "embeddings" (AI-readable representations) of Arterial's content, which get stored in Pinecone. It also powers the search/retrieval system that finds relevant content when building report sections.
 
@@ -220,7 +302,67 @@ FIRECRAWL_API_KEY=          (from firecrawl.dev)
 
 ---
 
-### 6. Unsplash — Stock placeholder images
+### 7. Airtable — Project data and configuration
+
+**What it does:** Airtable serves as the structured data layer for this project — managing crawl targets (which URLs to scrape), content source metadata, report section configuration, and a verification queue for items that need Scott's review. Scott already has a team Airtable account.
+
+**Cost:** Free tier or Scott's existing Team plan
+
+**Step-by-step:**
+
+1. Go to [airtable.com](https://airtable.com) and sign in (Scott's existing account)
+2. Create a new base called **"Arterial Knowledge Base"**
+3. Get your **Personal Access Token**:
+   - Go to [airtable.com/create/tokens](https://airtable.com/create/tokens)
+   - Click **Create new token**
+   - Name it `arterial-rag`
+   - Under **Scopes**, select: `data.records:read`, `data.records:write`, `schema.bases:read`
+   - Under **Access**, select the "Arterial Knowledge Base" base
+   - Click **Create token**
+   - **Copy the token immediately** — you will never see it again
+4. Paste it into your shared API keys file as `AIRTABLE_PERSONAL_ACCESS_TOKEN=pat...`
+5. Get your **Base ID**:
+   - Open the base → click **Help** (?) → **API Documentation**
+   - The Base ID is in the URL and starts with `app`
+   - Paste it as `AIRTABLE_BASE_ID=app...`
+
+**Gotchas:**
+- Airtable deprecated the old "API key" in 2024 — use **Personal Access Tokens** instead
+- Token is shown only ONCE when created
+- Table IDs will be populated after Juergen creates the required tables
+
+---
+
+### 8. n8n — Workflow automation
+
+**What it does:** n8n is a workflow automation platform that runs background processes — watching Dropbox folders for new files, orchestrating AI enrichment pipelines, scheduling web scrapes, and connecting services together. It's the glue that makes the knowledge base self-maintaining.
+
+**Cost:** Free (self-hosted) or ~$20/mo (n8n Cloud starter). Polymash already has an n8n Cloud instance at polymash.app.n8n.cloud.
+
+**Step-by-step (if creating a dedicated Arterial instance):**
+
+1. Go to [n8n.io](https://n8n.io)
+2. Click **Get Started Free**
+3. Sign up with email
+4. Choose **n8n Cloud** (managed hosting, no server setup)
+5. Select the **Starter** plan ($20/mo — 2,500 executions/month)
+6. Once your instance is running, get your API key:
+   - Go to **Settings** → **API** in the n8n dashboard
+   - Click **Create API Key**
+   - Copy the key
+7. Paste it into your shared API keys file as `N8N_API_KEY=...`
+8. Note your instance URL (e.g., `arterial.app.n8n.cloud`)
+
+**Alternatively:** Use Polymash's existing n8n Cloud instance with dedicated Arterial workflows (simplifies management, covered under licensing agreement if applicable).
+
+**Gotchas:**
+- n8n Cloud plans are based on execution count, not time — a simple workflow that runs daily uses ~30 executions/month
+- Self-hosted is free but requires a server (not recommended unless Scott has DevOps resources)
+- API key grants full access to all workflows — treat it like a password
+
+---
+
+### 9. Unsplash — Stock placeholder images
 
 **What it does:** Unsplash provides high-quality stock photos that we use as temporary placeholders while building the report. These get replaced with custom images or AI-generated art later.
 
@@ -251,7 +393,7 @@ FIRECRAWL_API_KEY=          (from firecrawl.dev)
 
 ---
 
-### 7. FireCrawl — Web scraping for the knowledge base
+### 10. FireCrawl — Web scraping for the knowledge base
 
 **What it does:** FireCrawl visits Arterial's websites (arterial.org, notrealart.com, etc.) and converts the pages into text that the AI can read and store in the knowledge base. This is how the AI learns about Arterial's programs.
 
@@ -282,7 +424,7 @@ FIRECRAWL_API_KEY=          (from firecrawl.dev)
 
 ---
 
-### 8. Vercel — Website hosting and auto-deploy
+### 11. Vercel — Website hosting and auto-deploy
 
 **What it does:** Vercel hosts the final website and automatically publishes updates whenever code is pushed to GitHub. Every code change triggers a new deployment within ~2 minutes.
 
@@ -315,7 +457,7 @@ FIRECRAWL_API_KEY=          (from firecrawl.dev)
 
 ---
 
-### 9. Cursor — Code editor (Phase 4, for Scott)
+### 12. Cursor — Code editor (Phase 4, for Scott)
 
 **What it does:** Cursor is a code editor (like Microsoft Word, but for code) that has AI built in. This is where Scott will eventually open the project, see the files, and use Claude Code to make edits. It also has a "Go Live" feature that shows you the website updating in real-time as changes are made.
 
