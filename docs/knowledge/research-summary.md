@@ -158,4 +158,4 @@ All detailed research is stored in `/docs/knowledge/`:
 | [artsville-usa-research.md](artsville-usa-research.md) | Artsville USA, New Orleans galleries, "Tale of Two Cities", partnerships |
 | [arterial-subprojects-research.md](arterial-subprojects-research.md) | Classic Black, Underbelly, Good Art, Arterial Radio, Ready To Roll |
 | [artwork-archive-research.md](artwork-archive-research.md) | AI-powered submission pipeline, n8n/Airtable architecture, First Friday tech |
-| [../arthouse/arthouse-research.md](../arthouse/arthouse-research.md) | Arthouse TV series, Fractured Atlas, production team, distribution strategy |
+| [arthouse-research.md](arthouse-research.md) | Arthouse TV series, Fractured Atlas, production team, distribution strategy |
