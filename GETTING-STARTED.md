@@ -53,7 +53,7 @@ If Polymash manages infrastructure, each AI service needs a **dedicated API key 
 
 | # | Service | What It Does | Cost | Decision |
 |---|---------|-------------|------|----------|
-| 1 | **Claude Code** | AI that builds and edits the project interactively | $100/mo subscription | Developer tool (Juergen) |
+| 1 | **Claude Code** | AI that builds and edits the project interactively (Scott's vibe-coding tool) | $100/mo subscription | Scott's own account (Juergen uses his own during development) |
 | 2 | **Anthropic API** | Claude models in automations, agents, pipelines | Pay-per-use (~$5–25/mo) | Dedicated Arterial key needed |
 | 3 | **OpenAI API** | GPT-4o/4.1 for classification, scoring, automation | Pay-per-use (~$5–25/mo) | Dedicated Arterial key needed |
 | 4 | **GitHub** | Stores the code, tracks tasks | Free | Scott needs account |
@@ -124,11 +124,13 @@ UNSPLASH_ACCESS_KEY=        (from unsplash.com/developers)
 
 ### 1. Anthropic (Claude) — The AI that powers everything
 
-**What it does:** Claude Code is the AI tool that builds and edits the entire website. When you type instructions in plain English ("change the headline to..."), Claude Code writes the code. This is the most important account.
+**What it does:** Claude Code is the AI tool that builds and edits the entire system. When you type instructions in plain English ("change the headline to..."), Claude Code writes the code. This is the most important account — and the core of the vibe-coding workflow that Scott will use to maintain and evolve his projects independently.
 
-**Cost:** $100/month (Claude Max subscription)
+**Cost:** $100/month (Claude Max subscription) — **Scott's own account**
 
-**Why Max ($100/mo) and not Pro ($20/mo):** Pro has a short context window and strict usage limits. When working on a project this size, you'll hit Pro's limits within minutes, causing frustrating pauses where you have to wait. Max provides the extended context window and higher usage that makes vibe-coding practical. The $200/mo tier exists but is more than needed for this project.
+**Why Scott needs his own Claude Max subscription:** The entire purpose of this system is for Scott to have a vibe-coding environment where he can make changes himself — update report content, add new documents to the knowledge base, launch new presentation sites, and evolve the platform without needing a developer for every edit. Claude Code with a Max subscription ($100/mo) is what makes this possible. The $20/mo Pro plan has usage limits too strict for real project work.
+
+**Why Max ($100/mo) and not Pro ($20/mo):** Pro has a short context window and strict usage limits. When working on a project this size, you'll hit Pro's limits within minutes, causing frustrating pauses where you have to wait. Max provides the extended context window and higher usage that makes vibe-coding practical. The $200/mo tier exists but is more than needed for Scott's use.
 
 **Step-by-step:**
 
@@ -140,22 +142,23 @@ UNSPLASH_ACCESS_KEY=        (from unsplash.com/developers)
 6. Enter payment information and confirm
 7. You now have access to Claude's most capable models with extended context
 
-**Separate API key** (for programmatic scripts — Juergen will tell you when this is needed):
+**Separate API key** (for automated pipelines — Juergen will set this up):
 
 1. Go to [console.anthropic.com](https://console.anthropic.com)
 2. Sign in with the same account
 3. Click **API Keys** in the left sidebar
 4. Click **Create Key**
-5. Name it `arterial-impact-report`
+5. Name it `arterial`
 6. **Copy the key immediately** — you will never see it again after closing this dialog
 7. Paste it into your shared API keys file as `ANTHROPIC_API_KEY=sk-ant-...`
 8. Go to **Settings** → **Billing** → add a payment method
-9. Set a **monthly spend limit of $25** (this is separate from the $100/mo subscription and covers API usage by scripts)
+9. Set a **monthly spend limit of $25** (this is separate from the $100/mo subscription and covers API usage by automated pipelines)
 
 **Gotchas:**
-- The Claude Max subscription and the API key billing are separate charges
+- The Claude Max subscription ($100/mo) and the API key billing are separate charges on the same account
 - The API key is shown only ONCE when created. If you lose it, delete it and create a new one
 - The $25/mo API spend limit is a safety net — actual usage will likely be much less
+- During development, Juergen uses his own Claude Code subscription. Scott's subscription is for when Scott takes over day-to-day editing and maintenance
 
 ---
 
