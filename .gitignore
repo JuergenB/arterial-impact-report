@@ -21,3 +21,6 @@ Thumbs.db
 
 # Vercel
 .vercel/
+
+# Private / internal documents (not for the public repo)
+.private/
